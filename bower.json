@@ -1,0 +1,30 @@
+{
+  "name": "jrl.utils",
+  "version": "0.0.1",
+  "homepage": "https://github.com/jeffsrepoaccount/jrl-utils",
+  "authors": [
+    "Jeff Lambert <jefflikeschicken@gmail.com>"
+  ],
+  "description": "Utility services for AngularJS for logging, localStorage, sessionStorage",
+  "main": "./dist/jrl.utils.min.js",
+  "moduleType": [
+    "globals"
+  ],
+  "keywords": [
+    "angularjs",
+    "localStorage",
+    "logging"
+  ],
+  "license": "MIT",
+  "ignore": [
+    "**/.*",
+    "node_modules",
+    "bower_components",
+    "public/bower_components",
+    "test",
+    "tests"
+  ],
+  "dependencies": {
+
+  }
+}
