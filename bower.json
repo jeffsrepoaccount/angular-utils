@@ -6,7 +6,7 @@
     "Jeff Lambert <jefflikeschicken@gmail.com>"
   ],
   "description": "Utility services for AngularJS for logging, localStorage, sessionStorage",
-  "main": "./dist/jrl.utils.min.js",
+  "main": "./src/jrl.utils.js",
   "moduleType": [
     "globals"
   ],
