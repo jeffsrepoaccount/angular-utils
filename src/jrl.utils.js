@@ -111,4 +111,81 @@
             }
         }
     ]);
+
+    app.service('notify', [
+        '$q', '$window',
+        function($q, $window) {
+            var svc = {
+                send: function(){},
+                requestPermission: function() {
+                    var defer = $q.defer();
+                    defer.reject();
+                    return defer.promise;
+                },
+                permission: null
+            };
+
+            // Let's only define actual stuff to do if we're inside of a 
+            // context that actually supports HTML5 Notifications
+            if("Notification" in $window) {
+                svc.send = send;
+                svc.requestPermission = requestPermission;
+            }
+
+            return svc;
+
+            /**
+             * Sends a notification to the user's desktop
+             *
+             * @param string title - Title of notification
+             * @param string body - Body of notification
+             * @param string icon - Notification icon url
+             * @param string direction - One of 'ltr' or 'rtl'
+             * @return void
+             */
+            function send(title, body, icon, direction) {
+                direction = direction || 'ltr';
+
+                if(!svc.permission) {
+                    requestPermission.then(function() {
+                        go();
+                    });
+                } else if(svc.permission !== 'denied') {
+                    go();
+                }
+
+                function go() {
+                    return new $window.Notification(title, {
+                        body: body,
+                        icon: icon,
+                        dir: direction
+                    });
+                }
+            }
+
+            /**
+             * Requests permission from the user to display HTML5 notifications
+             *
+             * @return promise - Resolved only if permission is granted
+             */
+            function requestPermission() {
+                var defer = $q.defer();
+
+                $window.Notification.requestPermission(
+                    function(permission) {
+                        svc.permission = permission;
+
+                        if(permission === 'granted') {
+                            defer.resolve();
+                            return;
+                        }
+
+                        defer.reject();
+                    }
+                );
+
+                return defer.promise;
+            }
+        }
+    ]);
 })();
