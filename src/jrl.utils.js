@@ -7,8 +7,9 @@
         function() {
             var enableDebugLogging = true;
             var svc = {
-                getLogFn:       getLogFn,
-                isEmptyObject:  isEmptyObject
+                getLogFn:           getLogFn,
+                isEmptyObject:      isEmptyObject,
+                queryStringToJson:  queryStringToJson
             };
 
             return svc;
@@ -62,6 +63,19 @@
                 }
 
                 return true;
+            }
+
+            function queryStringToJson(query) {
+                var pairs = query.split('&');
+                
+                var result = {};
+                pairs.forEach(function(pair) {
+                    pair = pair.split('=');
+                    result[pair[0]] = decodeURIComponent(pair[1] || '');
+                });
+
+                return JSON.parse(JSON.stringify(result));
+
             }
         }
     ]);
