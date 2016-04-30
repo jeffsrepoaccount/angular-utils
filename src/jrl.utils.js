@@ -85,19 +85,31 @@
         function($window) {
             return {
                 set: function(key, value) {
-                    $window.localStorage[key] = value;
+                    $window.localStorage.setItem(key, value);
                 },
                 get: function(key, defaultValue) {
                     return $window.localStorage[key] || defaultValue;
                 },
                 setObject: function(key, value) {
-                    $window.localStorage[key] = JSON.stringify(value);
+                    $window.localStorage.setItem(key, JSON.stringify(value));
                 },
                 getObject: function(key) {
                     return JSON.parse($window.localStorage[key] || '{}');
                 },
                 clear: function(key) {
                     return $window.localStorage.removeItem(key);
+                },
+                space: function() {
+                    var length = 0;
+
+                    Object.keys($window.localStorage).forEach(function(key) {
+                        length += $window.localStorage[key].length;
+                    });
+
+                    return length;
+                },
+                keys: function() {
+                    return Object.keys($window.localStorage);
                 }
             }
         }
