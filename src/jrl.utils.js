@@ -4,13 +4,28 @@
     var app = angular.module('jrl.utils', []);
 
     app.factory('common', [
-        function() {
+        '$window',
+        function($window) {
             var enableDebugLogging = true;
             var svc = {
                 getLogFn:           getLogFn,
                 isEmptyObject:      isEmptyObject,
-                queryStringToJson:  queryStringToJson
+                queryStringToJson:  queryStringToJson,
+                debounce:           debounce,
+                toast:              toastSuccess,
+                toastInfo:          toastInfo,
+                toastWarning:       toastWarning,
+                toastError:         toastError
             };
+
+            // Set toastr options
+            $window.toastr.options.newestOnTop = false;
+            $window.toastr.options.closeMethod = 'fadeOut';
+            $window.toastr.options.closeDuration = 300;
+            $window.toastr.options.closeEasing = 'swing';
+            $window.toastr.options.timeOut = 7500;
+            $window.toastr.options.extendedTimeOut = 10000;
+            $window.toastr.options.positionClass = 'toast-bottom-right';
 
             return svc;
 
@@ -55,6 +70,22 @@
                 }
             }
 
+            function toastSuccess(message, title) {
+                $window.toastr.success(message, title ? title : '');
+            }
+
+            function toastInfo(message, title) {
+                $window.toastr.info(message, title ? title : '');
+            }
+
+            function toastWarning(message, title) {
+                $window.toastr.warning(message, title ? title : '');
+            }
+
+            function toastError(message, title) {
+                $window.toastr.error(message, title ? title : '');
+            }
+
             // From @Christoph: http://stackoverflow.com/a/679937/697370
             function isEmptyObject(obj) {
                 for(var prop in obj) {
@@ -76,6 +107,19 @@
 
                 return JSON.parse(JSON.stringify(result));
 
+            }
+
+            // Adapted from: https://remysharp.com/2010/07/21/throttling-function-calls
+            function debounce(fn, fireRateMs) {
+                var timer = null;
+                return function() {
+                    var context = this, args = arguments;
+                    clearTimeout(timer);
+
+                    timer = setTimeout(function() {
+                        fn.apply(context, args);
+                    }, fireRateMs)
+                }
             }
         }
     ]);
@@ -147,6 +191,17 @@
 
         return false;
     };
+
+    // From @Paul S: http://stackoverflow.com/a/16227294/697370
+    Array.prototype.intersect = function(a) {
+        var t, b = this;
+        return a.filter(function (e) {
+            if (b.indexOf(e) !== -1) return true;
+        }).filter(function (e, i, c) { 
+            // extra step to remove duplicates
+            return c.indexOf(e) === i;
+        });
+    }
 
     Date.prototype.addDays = function(days) {
         var dat = new Date(this.valueOf())
