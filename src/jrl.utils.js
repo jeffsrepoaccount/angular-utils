@@ -19,13 +19,21 @@
             };
 
             // Set toastr options
-            $window.toastr.options.newestOnTop = false;
-            $window.toastr.options.closeMethod = 'fadeOut';
-            $window.toastr.options.closeDuration = 300;
-            $window.toastr.options.closeEasing = 'swing';
-            $window.toastr.options.timeOut = 7500;
-            $window.toastr.options.extendedTimeOut = 10000;
-            $window.toastr.options.positionClass = 'toast-bottom-right';
+            if($window.toastr) {
+                $window.toastr.options.newestOnTop = false;
+                $window.toastr.options.closeMethod = 'fadeOut';
+                $window.toastr.options.closeDuration = 300;
+                $window.toastr.options.closeEasing = 'swing';
+                $window.toastr.options.timeOut = 7500;
+                $window.toastr.options.extendedTimeOut = 10000;
+                $window.toastr.options.positionClass = 'toast-bottom-right';
+            }
+
+            var logSuccess = getLogFn('utils', 'success'),
+                logInfo = getLogFn('utils', 'info'),
+                logWarn = getLogFn('utils', 'warn'),
+                logError = getLogFn('utils', 'error')
+            ;
 
             return svc;
 
@@ -71,19 +79,39 @@
             }
 
             function toastSuccess(message, title) {
-                $window.toastr.success(message, title ? title : '');
+                if($window.toastr) {
+                    $window.toastr.success(message, title ? title : '');
+                    return;
+                }
+
+                logSuccess('(toast) ' + message, title);
             }
 
             function toastInfo(message, title) {
-                $window.toastr.info(message, title ? title : '');
+                if($window.toastr) {
+                    $window.toastr.info(message, title ? title : '');
+                    return;
+                }
+
+                logInfo('(toast) ' + message, title);
             }
 
             function toastWarning(message, title) {
-                $window.toastr.warning(message, title ? title : '');
+                if($window.toastr) {
+                    $window.toastr.warning(message, title ? title : '');
+                    return;
+                }
+
+                logWarn('(toast) ' + message, title);
             }
 
             function toastError(message, title) {
-                $window.toastr.error(message, title ? title : '');
+                if($window.toastr) {
+                    $window.toastr.error(message, title ? title : '');
+                    return;
+                }
+
+                logError('(toast) ' + message, title);
             }
 
             // From @Christoph: http://stackoverflow.com/a/679937/697370
