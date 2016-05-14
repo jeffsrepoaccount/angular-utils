@@ -1,5 +1,5 @@
 /**
- * jrl.utils Gruntfile
+ * jrl.utils gruntfile
  *
  * Usage: 
  *  grunt build
