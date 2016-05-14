@@ -11,6 +11,7 @@
                 getLogFn:           getLogFn,
                 isEmptyObject:      isEmptyObject,
                 isMobile:           isMobile,
+                isMobileOrTablet:   isMobileOrTablet,
                 queryStringToJson:  queryStringToJson,
                 debounce:           debounce,
                 toast:              toastSuccess,
