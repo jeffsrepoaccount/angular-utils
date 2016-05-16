@@ -235,26 +235,71 @@
         return false;
     };
 
+    // Polyfills
+
+    // Array functions
+
+    // Array.intersect(array)
     // From @Paul S: http://stackoverflow.com/a/16227294/697370
-    Array.prototype.intersect = function(a) {
-        var t, b = this;
-        return a.filter(function (e) {
-            if (b.indexOf(e) !== -1) return true;
-        }).filter(function (e, i, c) { 
-            // extra step to remove duplicates
-            return c.indexOf(e) === i;
-        });
+    if(!Array.prototype.intersect) {
+        Array.prototype.intersect = function(a) {
+            var t, b = this;
+            return a.filter(function (e) {
+                if (b.indexOf(e) !== -1) return true;
+            }).filter(function (e, i, c) { 
+                // extra step to remove duplicates
+                return c.indexOf(e) === i;
+            });
+        }
     }
 
-    Date.prototype.addDays = function(days) {
-        var dat = new Date(this.valueOf())
-        dat.setDate(dat.getDate() + days);
-        return dat;
-    };
+    // Array.findIndex(value)
+    // https://developer.mozilla.org/en-US/docs/Web/JavaScript/Reference/Global_Objects/Array/findIndex
+    if (!Array.prototype.findIndex) {
+        Array.prototype.findIndex = function(predicate) {
+            if (this === null) {
+                throw new TypeError('Array.prototype.findIndex called on null or undefined');
+            }
 
-    Date.prototype.subDays = function(days) {
-        var dat = new Date(this.valueOf())
-        dat.setDate(dat.getDate() - days);
-        return dat;
-    };
+            if (typeof predicate !== 'function') {
+                throw new TypeError('findIndex: predicate must be a function');
+            }
+
+            var list = Object(this),
+                length = list.length >>> 0,
+                thisArg = arguments[1],
+                value
+            ;
+
+            for (var i = 0; i < length; i++) {
+                value = list[i];
+                if (predicate.call(thisArg, value, i, list)) {
+                    return i;
+                }
+            }
+
+            return -1;
+        };
+    }
+
+
+    // Date functions
+
+    // Date.addDays(days)
+    if(!Date.prototype.addDays) {
+        Date.prototype.addDays = function(days) {
+            var dat = new Date(this.valueOf())
+            dat.setDate(dat.getDate() + days);
+            return dat;
+        };
+    }
+
+    // Date.subDays(days)
+    if(!Date.prototype.subDays) {
+        Date.prototype.subDays = function(days) {
+            var dat = new Date(this.valueOf())
+            dat.setDate(dat.getDate() - days);
+            return dat;
+        };
+    }
 })();
