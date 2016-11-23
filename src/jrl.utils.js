@@ -20,6 +20,7 @@
                 toastError:         toastError
             };
 
+            // TODO: Move these values to config
             // Set toastr options
             if($window.toastr) {
                 $window.toastr.options.newestOnTop      = false;
@@ -225,19 +226,22 @@
         }
     ]);
 
-    Array.prototype.contains = function(needle) {
-        for(var i in this) {
-            if(this.hasOwnProperty(i) && this[i] === needle) {
-                return true;
-            }
-        }
-
-        return false;
-    };
-
     // Polyfills
 
     // Array functions
+
+    // Array.contains(needle)
+    if(!Array.prototype.contains) {
+        Array.prototype.contains = function(needle) {
+            for(var i in this) {
+                if(this.hasOwnProperty(i) && this[i] === needle) {
+                    return true;
+                }
+            }
+
+            return false;
+        };
+    }
 
     // Array.intersect(array)
     // From @Paul S: http://stackoverflow.com/a/16227294/697370

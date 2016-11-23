@@ -5,7 +5,7 @@
   "authors": [
     "Jeff Lambert <jefflikeschicken@gmail.com>"
   ],
-  "description": "Utility services for AngularJS for logging, localStorage, sessionStorage",
+  "description": "Utility services for AngularJS for logging, localStorage, sessionStorage. Provides a few common polyfills",
   "main": "./src/jrl.utils.js",
   "moduleType": [
     "globals"
