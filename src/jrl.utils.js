@@ -7,6 +7,22 @@
         '$window',
         function($window) {
             var enableDebugLogging = true;
+            // Default log functions to empty
+            var logFn       = function(){},
+                logInfoFn   = function(){},
+                logWarnFn   = function(){},
+                logErrorFn  = function(){}
+            ;
+
+            if(console) {
+                // If console exists, set logging functions to the standard 
+                // console logging functions
+                logFn       = console.log;
+                logInfoFn   = console.info;
+                logWarnFn   = console.warn ? console.warn : console.log;
+                logErrorFn  = console.error;
+            }
+
             var svc = {
                 getLogFn:           getLogFn,
                 isEmptyObject:      isEmptyObject,
@@ -17,7 +33,12 @@
                 toast:              toastSuccess,
                 toastInfo:          toastInfo,
                 toastWarning:       toastWarning,
-                toastError:         toastError
+                toastError:         toastError,
+                setLogger:          setLogger,
+                setInfoLogger:      setInfoLogger,
+                setWarnLogger:      setWarnLogger,
+                setErrorLogger:     setErrorLogger,
+                setLoggingStatus:   setLoggingStatus
             };
 
             // TODO: Move these values to config
@@ -54,29 +75,24 @@
                 }
 
                 function logSuccess(msg, context) {
-                    if(enableDebugLogging) {
-                        console.log('[' + locality + '][success] ' + msg, context);
-                    }
+                    logMessage('[' + locality + '][success] ' + msg, context, logFn);
                 }
 
                 function logInfo(msg, context) {
-                    if(enableDebugLogging) {
-                        console.info('[' + locality + '][info] ' + msg, context);
-                    }
+                    logMessage('[' + locality + '][info] ' + msg, context, logInfoFn);
                 }
 
                 function logError(msg, context) {
-                    if(enableDebugLogging) {
-                        console.error('[' + locality + '][error] ' + msg, context);
-                    }
+                    logMessage('[' + locality + '][error] ' + msg, context, logErrorFn);
                 }
 
                 function logWarn(msg, context) {
-                    msg = '[' + locality + '][warning] ' + msg;
+                    logMessage('[' + locality + '][warning] ' + msg, context, logWarnFn);
+                }
+
+                function logMessage(msg, context, fn) {
                     if(enableDebugLogging) {
-                        console.warn ? console.warn(msg, context) : 
-                            console.log(msg, context)
-                        ;
+                        fn(msg, context);
                     }
                 }
             }
@@ -164,6 +180,30 @@
                         fn.apply(context, args);
                     }, fireRateMs)
                 }
+            }
+
+            function setLogger(logger) {
+                logFn = logger;
+                return svc;
+            }
+
+            function setInfoLogger(logger) {
+                infoLogFn = logger;
+                return svc;
+            }
+
+            function setWarnLogger(logger) {
+                warnLogger = logger;
+                return svc;
+            }
+
+            function setErrorLogger(logger) {
+                errorLogger = logger;
+                return svc;
+            }
+
+            function setLoggingStatus(isEnabled) {
+                enableDebugLogging = isEnabled;
             }
         }
     ]);
