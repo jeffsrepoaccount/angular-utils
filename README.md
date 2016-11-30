@@ -43,6 +43,9 @@ angular.module('myModule', ['jrl.utils'])
 This package also provides a few extra object functions.
 
 `Array.prototype.contains(needle)`  - Returns true if array contains `needle`, false otherwise.
+
 `Array.prototype.intersect(array)`  - Calculates array intersection and returns array as a result.
+
 `Date.prototype.addDays(days)`      - Adds `days` to a `Date`. Returns the resulting `Date`.
+
 `Date.prototype.subDays(days)`      - Substracts `days` from a `Date`. Returns the resulting `Date`.
