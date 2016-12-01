@@ -1,11 +1,11 @@
-# jrl-utils
+# angular-utils
 
 Includes utility services for interacting with localStorage, sessionStorage as well as better client-side logging than `console.log`. 
 
 ## Usage
 
 ```javascript
-angular.module('myModule', ['jrl.utils'])
+angular.module('myModule', ['angular.utils'])
     .controller('MyCtrl', [
         'localStorage', 'sessionStorage', 'common',
         function(localStorage, sessionStorage, common) {

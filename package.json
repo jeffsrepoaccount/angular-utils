@@ -1,6 +1,6 @@
 {
-  "name": "jrl-utils",
-  "version": "0.0.1",
+  "name": "angular-utils",
+  "version": "0.1.0",
   "description": "Utility services for AngularJS for logging, localStorage, sessionStorage",
   "main": "Gruntfile.js",
   "scripts": {
@@ -8,7 +8,7 @@
   },
   "repository": {
     "type": "git",
-    "url": "https://bitbucket.org/jefflikeschicken/jrl-config.git"
+    "url": "https://github.com/jeffsrepoaccount/angular-utils.git"
   },
   "keywords": [
     "angular",
@@ -19,7 +19,7 @@
   "author": "Jeff Lambert",
   "license": "MIT",
   "readmeFilename": "README.md",
-  "dependencies": {
+  "devDependencies": {
     "grunt": "^1.0.1",
     "grunt-banner": "^0.6.0",
     "grunt-cli": "^1.2.0",
@@ -27,5 +27,8 @@
     "grunt-contrib-concat": "^1.0.1",
     "grunt-contrib-copy": "^1.0.0",
     "grunt-contrib-uglify": "^1.0.1"
+  },
+  "dependencies": {
+    "angular": "^1.5.9"
   }
 }
