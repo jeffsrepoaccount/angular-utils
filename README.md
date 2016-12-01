@@ -5,7 +5,7 @@ Includes utility services for interacting with localStorage, sessionStorage as w
 ## Usage
 
 ```javascript
-angular.module('myModule', ['angular.utils'])
+angular.module('myModule', ['angular-utils'])
     .controller('MyCtrl', [
         'localStorage', 'sessionStorage', 'common',
         function(localStorage, sessionStorage, common) {
