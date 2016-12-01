@@ -1,7 +1,7 @@
 (function() {
     'use strict';
 
-    var app = angular.module('angular.utils', []);
+    var app = angular.module('angular-utils', []);
 
     app.factory('common', [
         '$window',
