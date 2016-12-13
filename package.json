@@ -2,13 +2,13 @@
   "name": "jrl-angular-utils",
   "version": "0.1.1",
   "description": "Utility services for AngularJS for logging, localStorage, sessionStorage",
-  "main": [ "dist/angular-utils.min.js" ],
+  "main": "dist/angular-utils.min.js",
   "scripts": {
-    "test": "grunt test"
+    "build": "grunt build"
   },
   "repository": {
     "type": "git",
-    "url": "https://github.com/jeffsrepoaccount/angular-utils.git"
+    "url": "https://github.com/jeffsrepoaccount/jrl-angular-utils.git"
   },
   "keywords": [
     "angular",
