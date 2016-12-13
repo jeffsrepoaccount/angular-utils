@@ -272,74 +272,37 @@
 
     // Object.merge(o2)
     if(!Object.prototype.merge) {
-        // Perform shallow merging
-        Object.prototype.merge = function(o2) {
-            for(var i in o2) {
-                if(o2.hasOwnProperty(i)) {
-                    this[i] = o2[i];
-                }
-            }
-
-            return this;
-        };
+        Object.defineProperty(Object, 'merge', {
+            value:      intersect,
+            enumerable: false
+        });
     }
 
     // Array functions
 
     // Array.contains(needle)
     if(!Array.prototype.contains) {
-        Array.prototype.contains = function(needle) {
-            for(var i in this) {
-                if(this.hasOwnProperty(i) && this[i] === needle) {
-                    return true;
-                }
-            }
-
-            return false;
-        };
+        Object.defineProperty(Array, 'contains', {
+            value:      intersect,
+            enumerable: false
+        });
     }
 
     // Array.intersect(array)
     // From @Paul S: http://stackoverflow.com/a/16227294/697370
     if(!Array.prototype.intersect) {
-        Array.prototype.intersect = function(a) {
-            var t, b = this;
-            return a.filter(function (e) {
-                if (b.indexOf(e) !== -1) return true;
-            }).filter(function (e, i, c) { 
-                // extra step to remove duplicates
-                return c.indexOf(e) === i;
-            });
-        }
+        Object.defineProperty(Array, 'intersect', {
+            value:      intersect,
+            enumerable: false
+        });
     }
 
     // Array.findIndex(value)
-    // https://developer.mozilla.org/en-US/docs/Web/JavaScript/Reference/Global_Objects/Array/findIndex
     if (!Array.prototype.findIndex) {
-        Array.prototype.findIndex = function(predicate) {
-            if (this === null) {
-                throw new TypeError('Array.prototype.findIndex called on null or undefined');
-            }
-
-            if (typeof predicate !== 'function') {
-                throw new TypeError('findIndex: predicate must be a function');
-            }
-
-            var list = Object(this),
-                length = list.length >>> 0,
-                thisArg = arguments[1],
-                value
-            ;
-
-            for (var i = 0; i < length; i++) {
-                value = list[i];
-                if (predicate.call(thisArg, value, i, list)) {
-                    return i;
-                }
-            }
-
-            return -1;
-        };
+        Object.defineProperty(Array, 'findIndex', {
+            value:      findIndex,
+            enumerable: false
+        });
     }
 
 
@@ -347,19 +310,86 @@
 
     // Date.addDays(days)
     if(!Date.prototype.addDays) {
-        Date.prototype.addDays = function(days) {
-            var dat = new Date(this.valueOf())
-            dat.setDate(dat.getDate() + days);
-            return dat;
-        };
+        Object.defineProperty(Date, 'addDays', {
+            value:      subDays,
+            enumerable: false
+        });
     }
 
     // Date.subDays(days)
     if(!Date.prototype.subDays) {
-        Date.prototype.subDays = function(days) {
-            var dat = new Date(this.valueOf())
-            dat.setDate(dat.getDate() - days);
-            return dat;
-        };
+        Object.defineProperty(Date, 'subDays', {
+            value:      subDays,
+            enumerable: false
+        });
+    }
+
+    // Perform shallow merging
+    function merge(o2) {
+        for(var i in o2) {
+            if(o2.hasOwnProperty(i)) {
+                this[i] = o2[i];
+            }
+        }
+
+        return this;
+    };
+
+    function contains(needle) {
+        for(var i in this) {
+            if(this.hasOwnProperty(i) && this[i] === needle) {
+                return true;
+            }
+        }
+
+        return false;   
+    }
+
+    function intersect(a) {
+        var t, b = this;
+        return a.filter(function (e) {
+            if (b.indexOf(e) !== -1) return true;
+        }).filter(function (e, i, c) { 
+            // extra step to remove duplicates
+            return c.indexOf(e) === i;
+        });
+    }
+
+    // https://developer.mozilla.org/en-US/docs/Web/JavaScript/Reference/Global_Objects/Array/findIndex
+    function findIndex(predicate) {
+        if (this === null) {
+            throw new TypeError('Array.prototype.findIndex called on null or undefined');
+        }
+
+        if (typeof predicate !== 'function') {
+            throw new TypeError('findIndex: predicate must be a function');
+        }
+
+        var list = Object(this),
+            length = list.length >>> 0,
+            thisArg = arguments[1],
+            value
+        ;
+
+        for (var i = 0; i < length; i++) {
+            value = list[i];
+            if (predicate.call(thisArg, value, i, list)) {
+                return i;
+            }
+        }
+
+        return -1;
+    }
+
+    function addDays(days) {
+        var dat = new Date(this.valueOf())
+        dat.setDate(dat.getDate() + days);
+        return dat;
+    }
+
+    function subDays(days) {
+        var dat = new Date(this.valueOf())
+        dat.setDate(dat.getDate() - days);
+        return dat;
     }
 })();
