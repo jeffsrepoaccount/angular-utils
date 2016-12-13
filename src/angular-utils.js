@@ -1,7 +1,7 @@
 (function() {
     'use strict';
 
-    var app = angular.module('angular.utils', []);
+    var app = angular.module('angular-utils', []);
 
     app.factory('common', [
         '$window',
@@ -267,6 +267,22 @@
     ]);
 
     // Polyfills
+
+    // Object functions
+
+    // Object.merge(o2)
+    if(!Object.prototype.merge) {
+        // Perform shallow merging
+        Object.prototype.merge = function(o2) {
+            for(var i in o2) {
+                if(o2.hasOwnProperty(i)) {
+                    this[i] = o2[i];
+                }
+            }
+
+            return this;
+        };
+    }
 
     // Array functions
 

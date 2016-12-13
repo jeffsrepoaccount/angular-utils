@@ -1,12 +1,12 @@
 {
-  "name": "jrl.utils",
-  "version": "0.0.1",
-  "homepage": "https://github.com/jeffsrepoaccount/jrl-utils",
+  "name": "angular-utils",
+  "version": "0.1.0",
+  "homepage": "https://github.com/jeffsrepoaccount/angular-utils",
   "authors": [
     "Jeff Lambert <jefflikeschicken@gmail.com>"
   ],
   "description": "Utility services for AngularJS for logging, localStorage, sessionStorage. Provides a few common polyfills",
-  "main": "./src/jrl.utils.js",
+  "main": [ "dist/jrl.utils.js" ],
   "moduleType": [
     "globals"
   ],
@@ -26,6 +26,6 @@
   ],
   "dependencies": {
     "angular": "~1.5",
-    "toastr": "^2.1.2"
+    "angular-toastr": "^2.1.1"
   }
 }

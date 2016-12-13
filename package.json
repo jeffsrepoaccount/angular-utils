@@ -2,7 +2,7 @@
   "name": "angular-utils",
   "version": "0.1.0",
   "description": "Utility services for AngularJS for logging, localStorage, sessionStorage",
-  "main": "Gruntfile.js",
+  "main": [ "dist/angular-utils.min.js" ],
   "scripts": {
     "test": "grunt test"
   },

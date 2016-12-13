@@ -3,7 +3,6 @@
  *
  * Usage: 
  *  grunt build
- *  grunt test
  */
 module.exports = function(grunt) {
 
