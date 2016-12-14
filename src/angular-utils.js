@@ -272,37 +272,25 @@
 
     // Object.merge(o2)
     if(!Object.prototype.merge) {
-        Object.defineProperty(Object, 'merge', {
-            value:      intersect,
-            enumerable: false
-        });
+        Object.merge = merge;
     }
 
     // Array functions
 
     // Array.contains(needle)
     if(!Array.prototype.contains) {
-        Object.defineProperty(Array, 'contains', {
-            value:      intersect,
-            enumerable: false
-        });
+        Array.contains = contains;
     }
 
     // Array.intersect(array)
     // From @Paul S: http://stackoverflow.com/a/16227294/697370
     if(!Array.prototype.intersect) {
-        Object.defineProperty(Array, 'intersect', {
-            value:      intersect,
-            enumerable: false
-        });
+        Array.intersect = intersect;
     }
 
     // Array.findIndex(value)
     if (!Array.prototype.findIndex) {
-        Object.defineProperty(Array, 'findIndex', {
-            value:      findIndex,
-            enumerable: false
-        });
+        Array.findIndex = findIndex;
     }
 
 
@@ -310,18 +298,12 @@
 
     // Date.addDays(days)
     if(!Date.prototype.addDays) {
-        Object.defineProperty(Date, 'addDays', {
-            value:      subDays,
-            enumerable: false
-        });
+        Date.addDays = addDays;
     }
 
     // Date.subDays(days)
     if(!Date.prototype.subDays) {
-        Object.defineProperty(Date, 'subDays', {
-            value:      subDays,
-            enumerable: false
-        });
+        Date.subDays = subDays;
     }
 
     // Perform shallow merging
@@ -335,6 +317,12 @@
         return this;
     };
 
+    /**
+     * Returns whether a given object contains a given value
+     * @param Object this
+     * @param mixed needle
+     * @return boolean
+     */
     function contains(needle) {
         for(var i in this) {
             if(this.hasOwnProperty(i) && this[i] === needle) {
@@ -345,6 +333,12 @@
         return false;   
     }
 
+    /**
+     * Calculates a given intersection between two arrays
+     * @param Array this
+     * @param Array a
+     * @return Array
+     */
     function intersect(a) {
         var t, b = this;
         return a.filter(function (e) {
@@ -358,7 +352,7 @@
     // https://developer.mozilla.org/en-US/docs/Web/JavaScript/Reference/Global_Objects/Array/findIndex
     function findIndex(predicate) {
         if (this === null) {
-            throw new TypeError('Array.prototype.findIndex called on null or undefined');
+            throw new TypeError('Array.findIndex called on null or undefined');
         }
 
         if (typeof predicate !== 'function') {
@@ -381,12 +375,24 @@
         return -1;
     }
 
+    /**
+     * Adds a given number of days to a Date object
+     * @param Date this
+     * @param int days
+     * @return Date
+     */
     function addDays(days) {
         var dat = new Date(this.valueOf())
         dat.setDate(dat.getDate() + days);
         return dat;
     }
 
+    /**
+     * Subtracts a given number of days from a Date object
+     * @param Date this
+     * @param int days
+     * @return Date
+     */
     function subDays(days) {
         var dat = new Date(this.valueOf())
         dat.setDate(dat.getDate() - days);
