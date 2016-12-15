@@ -272,25 +272,37 @@
 
     // Object.merge(o2)
     if(!Object.prototype.merge) {
-        Object.merge = merge;
+        Object.defineProperty(Object.prototype, 'merge', {
+            value: merge,
+            enumerable: false
+        });
     }
 
     // Array functions
 
     // Array.contains(needle)
     if(!Array.prototype.contains) {
-        Array.contains = contains;
+        Object.defineProperty(Array.prototype, 'contains', {
+            value: contains,
+            enumerable: false
+        });
     }
 
     // Array.intersect(array)
     // From @Paul S: http://stackoverflow.com/a/16227294/697370
     if(!Array.prototype.intersect) {
-        Array.intersect = intersect;
+        Object.defineProperty(Array.prototype, 'intersect', {
+            value: intersect,
+            enumerable: false
+        });
     }
 
     // Array.findIndex(value)
     if (!Array.prototype.findIndex) {
-        Array.findIndex = findIndex;
+        Object.defineProperty(Array.prototype, 'findIndex', {
+            value: findIndex,
+            enumerable: false
+        });
     }
 
 
@@ -298,12 +310,18 @@
 
     // Date.addDays(days)
     if(!Date.prototype.addDays) {
-        Date.addDays = addDays;
+        Object.defineProperty(Date.prototype, 'addDays', {
+            value: addDays,
+            enumerable: false
+        });
     }
 
     // Date.subDays(days)
     if(!Date.prototype.subDays) {
-        Date.subDays = subDays;
+        Object.defineProperty(Date.prototype, 'subDays', {
+            value: contains,
+            enumerable: false
+        });
     }
 
     // Perform shallow merging
