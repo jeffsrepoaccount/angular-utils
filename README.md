@@ -42,10 +42,14 @@ angular.module('myModule', ['angular-utils'])
 
 This package also provides a few extra object functions.
 
-`Array.prototype.contains(needle)`  - Returns true if array contains `needle`, false otherwise.
+`Object.isEmpty()`          - Returns true if an object is empty, false otherwise.
 
-`Array.prototype.intersect(array)`  - Calculates array intersection and returns array as a result.
+`Object.merge(o2)`          - Merges `o2` with Object. `o2` keys will overwrite `this`.
 
-`Date.prototype.addDays(days)`      - Adds `days` to a `Date`. Returns the resulting `Date`.
+`Array.contains(needle)`    - Returns true if Array contains `needle`, false otherwise.
 
-`Date.prototype.subDays(days)`      - Substracts `days` from a `Date`. Returns the resulting `Date`.
+`Array.intersect(array)`    - Calculates array intersection and returns array as a result.
+
+`Date.addDays(days)`        - Adds `days` to a `Date`. Returns the resulting `Date`.
+
+`Date.subDays(days)`        - Substracts `days` from a `Date`. Returns the resulting `Date`.
