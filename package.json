@@ -1,7 +1,7 @@
 {
   "name": "jrl-angular-utils",
   "version": "0.2.0",
-  "description": "Utility services for AngularJS for logging, localStorage, sessionStorage",
+  "description": "Utility services for AngularJS for logging, browser storage, desktop notifications",
   "main": "dist/angular-utils.min.js",
   "scripts": {
     "build": "grunt build"
@@ -29,7 +29,6 @@
     "grunt-contrib-uglify": "^1.0.1"
   },
   "dependencies": {
-    "angular": "^1.5.9",
-    "angular-toastr": "^2.1.1"
+    "angular": "^1.5.9"
   }
 }
