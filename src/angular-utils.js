@@ -398,6 +398,30 @@
         return true;
     }
 
+    /**
+     * Adapted from @Sean Vieira: http://stackoverflow.com/a/4994244/697370
+     * Returns true if this is an empty object.
+     * @return boolean
+     */
+    function isEmpty() {
+        // null and undefined are "empty"
+        if (this == null) return true;
+
+        // Assume if it has a length property with a non-zero value
+        // that that property is correct.
+        if (this.length > 0)    return false;
+        if (this.length === 0)  return true;
+
+        // If it isn't an object at this point
+        // it is empty, but it can't be anything *but* empty
+        // Is it empty?  Depends on your application.
+        if (typeof this !== "object") return true;
+
+        if (Object.getOwnPropertyNames(this).length > 0) return false;
+
+        return true;
+    }
+
     // Perform shallow merging
     function merge(o2) {
         for(var i in o2) {
