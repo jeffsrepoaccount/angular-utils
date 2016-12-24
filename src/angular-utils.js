@@ -11,8 +11,8 @@
     var app = angular.module('angular-utils', []);
 
     app.factory('common', [
-        '$window',
-        function($window) {
+        '$filter', '$window',
+        function($filter, $window) {
             var enableDebugLogging = true;
             // Default log functions to empty
             var logFn       = function(){},
@@ -44,10 +44,10 @@
                 setLoggingStatus:   setLoggingStatus
             };
 
-            var logSuccess = getLogFn('utils', 'success'),
-                logInfo = getLogFn('utils', 'info'),
-                logWarn = getLogFn('utils', 'warn'),
-                logError = getLogFn('utils', 'error')
+            var logSuccess  = getLogFn('utils', 'success'),
+                logInfo     = getLogFn('utils', 'info'),
+                logWarn     = getLogFn('utils', 'warn'),
+                logError    = getLogFn('utils', 'error')
             ;
 
             return svc;
@@ -83,7 +83,11 @@
 
                 function logMessage(msg, context, fn) {
                     if(enableDebugLogging) {
-                        fn(msg, context);
+                        fn( 
+                            // Add timestamp to message
+                            $filter('date')(new Date(), "[dd-MM-yyyy HH:mm:ss]") + msg, 
+                            context
+                        );
                     }
                 }
             }
@@ -167,6 +171,9 @@
         }
     ]);
 
+    /** 
+     * HTML5 Local Storage service
+     */
     app.factory('localStorage', [
         '$window', 
         function($window) {
@@ -202,6 +209,9 @@
         }
     ]);
 
+    /**
+     * HTML5 Session Storage Service
+     */
     app.factory('sessionStorage', [
         '$window', 
         function($window) {
@@ -225,6 +235,9 @@
         }
     ]);
 
+    /**
+     * HTML5 Notifications Service
+     */
     app.service('notify', [
         '$q', '$window',
         function($q, $window) {
@@ -311,37 +324,24 @@
 
     // Object.merge(o2)
     if(!Object.prototype.merge) {
-        Object.defineProperty(Object.prototype, 'merge', {
-            value: merge,
-            enumerable: false
-        });
+        defineMethod(Object.prototype, 'merge', merge);
     }
 
     // Array functions
 
     // Array.contains(needle)
     if(!Array.prototype.contains) {
-        Object.defineProperty(Array.prototype, 'contains', {
-            value: contains,
-            enumerable: false
-        });
+        defineMethod(Array.prototype, 'contains', contains);
     }
 
     // Array.intersect(array)
-    // From @Paul S: http://stackoverflow.com/a/16227294/697370
     if(!Array.prototype.intersect) {
-        Object.defineProperty(Array.prototype, 'intersect', {
-            value: intersect,
-            enumerable: false
-        });
+        defineMethod(Array.prototype, 'intersect', intersect);
     }
 
     // Array.findIndex(value)
     if (!Array.prototype.findIndex) {
-        Object.defineProperty(Array.prototype, 'findIndex', {
-            value: findIndex,
-            enumerable: false
-        });
+        defineMethod(Array.prototype, 'findIndex', findIndex);
     }
 
 
@@ -349,17 +349,21 @@
 
     // Date.addDays(days)
     if(!Date.prototype.addDays) {
-        Object.defineProperty(Date.prototype, 'addDays', {
-            value: addDays,
-            enumerable: false
-        });
+        defineMethod(Date.prototype, 'addDays', addDays);
     }
 
     // Date.subDays(days)
     if(!Date.prototype.subDays) {
-        Object.defineProperty(Date.prototype, 'subDays', {
-            value: contains,
-            enumerable: false
+        defineMethod(Date.prototype, 'subDays', subDays);
+    }
+
+    function defineMethod(obj, property, value) {
+        Object.defineProperty(obj, property, {
+            value:          value,
+            enumerable:     false,
+            configurable:   true,
+            enumerable:     false,
+            writable:       false
         });
     }
 
@@ -392,6 +396,7 @@
 
     /**
      * Calculates a given intersection between two arrays
+     * From @Paul S: http://stackoverflow.com/a/16227294/697370
      * @param Array this
      * @param Array a
      * @return Array
@@ -408,16 +413,16 @@
 
     // https://developer.mozilla.org/en-US/docs/Web/JavaScript/Reference/Global_Objects/Array/findIndex
     function findIndex(predicate) {
-        if (this === null) {
-            throw new TypeError('Array.findIndex called on null or undefined');
+        if (this == null) {
+            throw new TypeError('Array.prototype.findIndex called on null or undefined');
         }
 
         if (typeof predicate !== 'function') {
-            throw new TypeError('findIndex: predicate must be a function');
+            throw new TypeError('predicate must be a function');
         }
 
-        var list = Object(this),
-            length = list.length >>> 0,
+        var list    = Object(this),
+            length  = list.length >>> 0,
             thisArg = arguments[1],
             value
         ;
